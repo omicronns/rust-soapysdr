@@ -731,6 +731,13 @@ impl Device {
         }
     }
 
+    /// List available sample rates.
+    pub fn list_sample_rates(&self, direction: Direction, channel: usize) -> Result<Vec<f64>, Error> {
+        unsafe {
+            list_result(|len_ptr| SoapySDRDevice_listSampleRates(self.inner.ptr, direction.into(), channel, len_ptr))
+        }
+    }
+
     /// Get the baseband filter width of the chain in Hz
     pub fn bandwidth(&self, direction: Direction, channel: usize) -> Result<f64, Error> {
         unsafe {
